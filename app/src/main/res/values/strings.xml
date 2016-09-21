@@ -5,4 +5,39 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- trong file nav_header_main.xml-->
+    <string name="nav_header_app_name">AppLocker</string>
+    <string name="nav_header_email">groupTNS - SE114</string>
+
+    <!-- trong file setting.xml -->
+    <string name="setting_lock_enable">Khóa ứng dụng </string>
+    <string name="setting_lock_type">Loại Khóa</string>
+    <string name="setting_lock_background">Màu nền</string>
+    <string name="setting_lock_background_summary">Màu nền để hiển thị trong khi đang khóa ứng dụng</string>
+    <string name="setting_title_password">Cài đặt mật khẩu</string>
+    <string name="setting_vibration">Rung</string>
+    <string name="setting_vibration_summary">Rung khi nhập sai mật khẩu</string>
+    <string name="setting_change_password">Đổi mật khẩu</string>
+
+    <string name="setting_title_patern">Cài đặt khóa hình</string>
+    <string name="setting_change_patern">Đổi hình</string>
+
+    <string name="setting_title_general">Cài đặt chung</string>
+    <string name="setting_general_start_at_boot">Khóa ứng dụng ngay sau khi khởi động máy</string>
+    <string name="setting_general_relock_after_screen_off">Khóa ứng dụng ngay sau khi tắt màn hình</string>
+    <string name="setting_general_wrong_time_title">Số lần sai mật khẩu</string>
+    <string name="setting_general_wrong_time_input">Nhập số lần sai mật khẩu</string>
+
+    <string name="setting_title_user">Cài đặt tài khoản</string>
+    <string name="setting_user_name">Tên tài khoản</string>
+    <string name="setting_user_name_summary">tanpn2402</string>
+
+    <string name="setting_user_full_name">Họ tên</string>
+    <string name="setting_user_full_name_summary">Phạm Nhật Tân</string>
+    <string name="setting_user_email">Email hồi phục</string>
+    <string name="setting_user_email_summary">tan******@*****.com</string>
+    <string name="setting_user_phone">Số điện thoại hồi phục</string>
+    <string name="setting_user_phone_summary">090********</string>
+    <string name="setting_user_chang_info">Thay đổi thông tin</string>
 </resources>
