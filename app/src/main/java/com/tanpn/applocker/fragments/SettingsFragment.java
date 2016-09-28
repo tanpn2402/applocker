@@ -10,6 +10,7 @@ import android.support.v4.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.tanpn.applocker.R;
 
@@ -23,6 +24,7 @@ public class SettingsFragment extends PreferenceFragment {
     public SettingsFragment() {
         // Required empty public constructor
     }
+
 
 
     @Override
