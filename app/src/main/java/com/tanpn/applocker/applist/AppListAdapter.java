@@ -2,6 +2,7 @@ package com.tanpn.applocker.applist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -35,12 +36,19 @@ public class AppListAdapter extends BaseAdapter {
     private Set<AppListElement> initItems;
     private List<AppListElement> listItems;
 
+
+    private SharedPreferences.Editor mEditor;
+
+
     public AppListAdapter(Context _context){
         this.context = _context;
         packageManager = context.getPackageManager();
 
         initItems = new HashSet<>();
         listItems = new ArrayList<>();
+
+        // tao doi tuong share preference
+        mEditor = PreUtils.appPrefs(this.context).edit();
 
         new getApps().execute((Void[]) null);
         //getInstalledApps();
@@ -121,6 +129,16 @@ public class AppListAdapter extends BaseAdapter {
             }
         }
 
+
+        // kiem tra trong share prefs xem co app nao lock hay khong
+
+        // lay list cac app bi lock
+        final Set<String> lockedApps = PreUtils.getLockedApps(this.context);
+
+        // luu vao initList
+        for (AppListElement app : initItems) {
+            app.locked = lockedApps.contains(app.packageName);
+        }
 
         // copy construction
         listItems = new ArrayList<>(initItems);
@@ -299,8 +317,8 @@ public class AppListAdapter extends BaseAdapter {
     public void toggle(AppListElement item) {
         if (item.isApp()) {
             item.locked = !item.locked;
-            //setLocked(item.locked, item.packageName);
-           // save();
+            setLocked(item.locked, item.packageName);
+            save();
         }
         List<AppListElement> list = new ArrayList<>(listItems);
         Collections.sort(list);
@@ -316,15 +334,15 @@ public class AppListAdapter extends BaseAdapter {
         //Log.d("", "setLocked");
         for (String packageName : packageNames) {
             if (lock) {
-                //mEditor.putBoolean(packageName, true);
+                mEditor.putBoolean(packageName, true);
             } else {
-                //mEditor.remove(packageName);
+                mEditor.remove(packageName);
             }
         }
     }
 
     void save() {
-        //PrefUtils.apply(mEditor);
+        PreUtils.apply(mEditor);
         //AppLockService.restart(mContext);
     }
 
