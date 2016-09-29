@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,7 @@ public class AppListAdapter extends BaseAdapter {
                 AppListElement element = new AppListElement(
                         app.loadLabel(pm).toString(), // lay label
                         app.loadIcon(pm),                          // icon
+                        app.activityInfo.packageName,              // package
                         AppListElement.PRIORITY_NORMAL_APPS);       // dat priority = PRIORITY_NORMAL_APPS
 
                 initItems.add(element);
@@ -141,14 +143,22 @@ public class AppListAdapter extends BaseAdapter {
 
             // neu la systemuiAppPacket --> day la system app
             if(systemuiAppPackage.equals(app.packageName)){
-                initItemList.add(new AppListElement("System UI", app.loadIcon(packageManager), AppListElement.PRIORITY_SYSTEM_APPS));
+                initItemList.add(new AppListElement(
+                        "System UI",
+                        app.loadIcon(packageManager),
+                        app.packageName,
+                        AppListElement.PRIORITY_SYSTEM_APPS));
 
                 //dat gia tri isSystem = true
                 isSystemApp = true;
             }
             // neu la bo cai dat installer --> day la importance app
             else if(installer.equals(app.packageName)){
-                initItemList.add(new AppListElement("Installer", app.loadIcon(packageManager), AppListElement.PRIORITY_IMPORTANT_APPS));
+                initItemList.add(new AppListElement(
+                        "Installer",
+                        app.loadIcon(packageManager),
+                        app.packageName,
+                        AppListElement.PRIORITY_IMPORTANT_APPS));
 
                 //dat gia tri isImportanceApp
                 isImportantApp = true;
@@ -162,6 +172,7 @@ public class AppListAdapter extends BaseAdapter {
                 initItemList.add(new AppListElement(
                         app.loadLabel(packageManager).toString(),
                         app.loadIcon(packageManager),
+                        app.packageName,
                         AppListElement.PRIORITY_SYSTEM_APPS));
 
                 isSystemApp = true;
@@ -172,6 +183,7 @@ public class AppListAdapter extends BaseAdapter {
                 initItemList.add(new AppListElement(
                         app.loadLabel(packageManager).toString(),
                         app.loadIcon(packageManager),
+                        app.packageName,
                         AppListElement.PRIORITY_IMPORTANT_APPS
                 ));
 
@@ -211,6 +223,7 @@ public class AppListAdapter extends BaseAdapter {
     public Object getItem(int i) {
         return listItems.get(i);
     }
+
 
     @Override
     public long getItemId(int i) {
@@ -260,6 +273,9 @@ public class AppListAdapter extends BaseAdapter {
         ImageView imIcon = (ImageView) v.findViewById(R.id.imIcon);
         imIcon.setImageBitmap(utils.drawableToBitmap(listItems.get(i).getIcon()));
 
+        ImageView imApp_Lock = (ImageView) v.findViewById(R.id.imApplist_item_lock);
+        imApp_Lock.setVisibility(listItems.get(i).locked ? View.VISIBLE : View.GONE);
+
         return v;
     }
 
@@ -280,6 +296,57 @@ public class AppListAdapter extends BaseAdapter {
         }
     }
 
+    public void toggle(AppListElement item) {
+        if (item.isApp()) {
+            item.locked = !item.locked;
+            //setLocked(item.locked, item.packageName);
+           // save();
+        }
+        List<AppListElement> list = new ArrayList<>(listItems);
+        Collections.sort(list);
+        boolean dirty = !list.equals(listItems);
 
+
+        Log.i("aaaaaaa", "dirty = " + dirty + ", mDirtyState = " + mDirtyState);
+
+        notifyDirtyStateChanged(dirty);
+    }
+
+    void setLocked(boolean lock, String... packageNames) {
+        //Log.d("", "setLocked");
+        for (String packageName : packageNames) {
+            if (lock) {
+                //mEditor.putBoolean(packageName, true);
+            } else {
+                //mEditor.remove(packageName);
+            }
+        }
+    }
+
+    void save() {
+        //PrefUtils.apply(mEditor);
+        //AppLockService.restart(mContext);
+    }
+
+
+    public boolean areAllAppsLocked() {
+        for (AppListElement app : listItems)
+            if (app.isApp() && !app.locked)
+                return false;
+        return true;
+    }
+
+    public void setAllLocked(boolean lock) {
+        ArrayList<String> apps = new ArrayList<>();
+        for (AppListElement app : listItems) {
+            if (app.isApp()) {
+                app.locked = lock;
+                apps.add(app.packageName);
+            }
+        }
+        setLocked(lock, apps.toArray(new String[apps.size()]));
+        sort();
+        save();
+    }
 
 }

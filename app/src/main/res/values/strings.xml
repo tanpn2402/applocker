@@ -40,4 +40,17 @@
     <string name="setting_user_phone">Số điện thoại hồi phục</string>
     <string name="setting_user_phone_summary">090********</string>
     <string name="setting_user_chang_info">Thay đổi thông tin</string>
+
+
+    <!--Trong file MainActivity-->
+    <string name="main_title_allapp">Tất cả Ứng dụng</string>
+    <string name="main_title_setting">Cài đặt</string>
+
+
+    <!-- trong file menu/main_menu-->
+    <string name="main_menu_sort">Sắp xếp</string>
+    <string name="main_menu_lock_all">Khóa tất cả</string>
+    <string name="main_menu_unlock_all">Hủy khóa tất cả</string>
+    <string name="main_menu_undo">Làm lại</string>
+
 </resources>

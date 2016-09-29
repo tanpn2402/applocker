@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="#127871">
+        android:background="@color/applistadapter_separator">
 
         <TextView
             android:layout_width="wrap_content"

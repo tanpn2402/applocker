@@ -3,4 +3,7 @@
     <color name="colorPrimary">#34495E</color>
     <color name="colorPrimaryDark">#22313F</color>
     <color name="colorAccent">#117901</color>
+
+    // trong file layout_applistadapter_separator
+    <color name="applistadapter_separator">#127871</color>
 </resources>

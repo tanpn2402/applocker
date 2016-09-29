@@ -18,7 +18,7 @@
             android:id="@+id/nav_share"
             android:title="Share" />
         <item
-            android:id="@+id/nav_send"
+            android:id="@+id/nav_rate"
             android:title="Rate" />
     </group>
 

@@ -1,10 +1,11 @@
 package com.tanpn.applocker;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,12 +21,22 @@ import com.tanpn.applocker.fragments.SettingsFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // tieu de
+    private CharSequence mTitle;
+
+    private Fragment currentFragment;
+    private int currentFragmentID;
+
+    final String TITLE_ALL_APP = "Tất cả Ứng dụng";
+    final String TITLE_SETTING = "Cài đặt";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -36,6 +47,25 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // get title
+        mTitle = getTitle();
+
+        // chuyen den fragment all apps
+        currentFragment = new AppsFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_replace, currentFragment).commit();
+        currentFragmentID = R.id.nav_all_apps;
+
+        // set title
+        setTitle(TITLE_ALL_APP);
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+
+        mTitle = title;
+        getSupportActionBar().setTitle(mTitle);
     }
 
     @Override
@@ -48,27 +78,47 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    final String tag = "APPLOCK_123: ";
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    protected void onPause() {
+        super.onPause();
+
+        Log.i(tag, "pause");
+        finish();
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        Log.i(tag, "resume");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.i(tag, "destroy");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.global, menu);
+        return true;
+    }
+
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -76,31 +126,67 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_all_apps) {
+        if (id == R.id.nav_all_apps && currentFragmentID != R.id.nav_all_apps) {
             // Handle the camera action
-            AppsFragment appsFragment = new AppsFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(
+            currentFragment = new AppsFragment();
+            getSupportFragmentManager().beginTransaction().replace(
                     R.id.fragment_replace,
-                    appsFragment
+                    currentFragment
             ).commit();
-        } else if (id == R.id.nav_settings) {
-            SettingsFragment settinsFragment = new SettingsFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().replace(
+
+            // set title
+            setTitle(TITLE_ALL_APP);
+
+            // set currentFragment ID
+            currentFragmentID = R.id.nav_all_apps;
+        } else if (id == R.id.nav_settings && currentFragmentID != R.id.nav_settings) {
+            currentFragment = new SettingsFragment();
+            getSupportFragmentManager().beginTransaction().replace(
                     R.id.fragment_replace,
-                    settinsFragment
+                    currentFragment
             ).commit();
+
+            // set title
+            setTitle(TITLE_SETTING);
+
+            // set currentFragment ID
+            currentFragmentID = R.id.nav_settings;
         } else if (id == R.id.nav_contact) {
-
+            onContactButtonSelected();
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            onShareButtonSelected();
+        } else if (id == R.id.nav_rate) {
+            onRateButtonSelected();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+    * Mo Google Play va cho 5*
+    *
+    * */
+    private void onRateButtonSelected(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://details?id=" + getPackageName()));
+        if (getPackageManager().queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY).size() >= 1) {
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * Share thong qua facebook.
+    **/
+    private void onShareButtonSelected(){
+
+    }
+    /**
+    * Mo ung dung MAIL va soan tin nhan den dia chi mail: abc.....
+    * */
+    private void onContactButtonSelected(){
+
     }
 }

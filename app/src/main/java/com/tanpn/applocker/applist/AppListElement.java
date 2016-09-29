@@ -1,6 +1,7 @@
 package com.tanpn.applocker.applist;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 /**
  * Created by phamt_000 on 9/28/16.
@@ -10,13 +11,13 @@ public class AppListElement implements Comparable<AppListElement> {
     private String title;
 
     // ten package
-    private String packageName;
+    public String packageName;
 
     // icon cua app
     private Drawable icon;
 
     // kiem tra xem app nay co bi khoa hay khong
-    private boolean locked = false;
+    public boolean locked = false;
 
     // muc do uu tien cua applist element
     private int priority;
@@ -39,10 +40,11 @@ public class AppListElement implements Comparable<AppListElement> {
         return title;
     }
 
-    public AppListElement(String label, Drawable icon, int priority) {
+    /**For active apps**/
+    public AppListElement(String label, Drawable icon,String packageName ,int priority) {
         this.title = label;
         this.icon = icon;
-        this.packageName = "dd";
+        this.packageName = packageName;
         this.priority = priority;
     }
 
@@ -50,7 +52,7 @@ public class AppListElement implements Comparable<AppListElement> {
     public AppListElement(String label, int priority) {
         this.title = label;
         this.icon = null;
-        this.packageName = "";
+        this.packageName = null;
         this.priority = priority;
     }
 
@@ -64,10 +66,6 @@ public class AppListElement implements Comparable<AppListElement> {
     }
 
 
-    // kiem tra xem co lock hay khong
-    public boolean isLocked(){
-        return locked;
-    }
 
     // kiem tra xem Element nay la app hay la separator
     public boolean isApp() {
@@ -85,5 +83,21 @@ public class AppListElement implements Comparable<AppListElement> {
             return 0;
         }
         return this.title.compareTo(appListElement.title);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Log.i("aaaaaa", "equals");
+        if (obj == null)
+            return false;
+        if (!(obj instanceof AppListElement))
+            return false;
+        AppListElement sh = (AppListElement) obj;
+        if (isApp() != sh.isApp())
+            return false;
+        if (!isApp()) {
+            return title != null && title.equals(sh.title);
+        }
+        return packageName != null && packageName.equals(sh.packageName);
     }
 }
