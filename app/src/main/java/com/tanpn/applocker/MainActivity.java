@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.tanpn.applocker.fragments.AppsFragment;
 import com.tanpn.applocker.fragments.SettingsFragment;
@@ -187,6 +188,19 @@ public class MainActivity extends AppCompatActivity
     * Mo ung dung MAIL va soan tin nhan den dia chi mail: abc.....
     * */
     private void onContactButtonSelected(){
-
+        try
+        {
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            emailIntent.setType("vnd.android.cursor.item/email");
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"tanpn2402@gmail.com"});
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Bugs and Issues");
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Type your issue");
+            startActivity(Intent.createChooser(emailIntent, "Send mail using..."));
+        }
+        catch(Exception ex)
+        {
+            Toast.makeText(this, "Some problems while open email app", Toast.LENGTH_SHORT).show();
+        }
     }
 }
