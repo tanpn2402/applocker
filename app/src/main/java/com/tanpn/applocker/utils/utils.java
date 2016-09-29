@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 
 /**
  * Created by phamt_000 on 9/21/16.
@@ -32,6 +33,14 @@ public class utils {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+
+
+    // tao dialog share
+    public static AlertDialog createAlerDialog(String title, String message, String leftButtonText, String rightButtonText){
+
+        return null;
     }
 
 

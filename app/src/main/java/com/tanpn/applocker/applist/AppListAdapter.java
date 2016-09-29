@@ -106,7 +106,7 @@ public class AppListAdapter extends BaseAdapter {
 
 
         //
-        initItems.add(new AppListElement("Normal App", AppListElement.PRIORITY_NORMAL_CATEGORY));
+        initItems.add(new AppListElement(context.getString(R.string.adapter_separator_normal_app), AppListElement.PRIORITY_NORMAL_CATEGORY));
 
 
         // -------get normal apps
@@ -162,7 +162,7 @@ public class AppListAdapter extends BaseAdapter {
             // neu la systemuiAppPacket --> day la system app
             if(systemuiAppPackage.equals(app.packageName)){
                 initItemList.add(new AppListElement(
-                        "System UI",
+                        context.getString(R.string.adapter_system_ui_app),
                         app.loadIcon(packageManager),
                         app.packageName,
                         AppListElement.PRIORITY_SYSTEM_APPS));
@@ -173,7 +173,7 @@ public class AppListAdapter extends BaseAdapter {
             // neu la bo cai dat installer --> day la importance app
             else if(installer.equals(app.packageName)){
                 initItemList.add(new AppListElement(
-                        "Installer",
+                        context.getString(R.string.adapter_intaller_app),
                         app.loadIcon(packageManager),
                         app.packageName,
                         AppListElement.PRIORITY_IMPORTANT_APPS));
@@ -223,8 +223,8 @@ public class AppListAdapter extends BaseAdapter {
             initItemList.add(new AppListElement("Importance App", AppListElement.PRIORITY_IMPORTANT_CATEGORY));
         }*/
 
-        initItemList.add(new AppListElement("System Apps", AppListElement.PRIORITY_SYSTEM_CATEGORY));
-        initItemList.add(new AppListElement("Importance App", AppListElement.PRIORITY_IMPORTANT_CATEGORY));
+        initItemList.add(new AppListElement(context.getString(R.string.adapter_separator_system_app), AppListElement.PRIORITY_SYSTEM_CATEGORY));
+        initItemList.add(new AppListElement(context.getString(R.string.adapter_separator_importance_app), AppListElement.PRIORITY_IMPORTANT_CATEGORY));
 
 
 

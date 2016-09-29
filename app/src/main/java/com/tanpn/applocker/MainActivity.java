@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tanpn.applocker.fragments.AppsFragment;
@@ -181,9 +185,47 @@ public class MainActivity extends AppCompatActivity
     /**
      * Share thong qua facebook.
     **/
+    private TextView sTitle;
+    private TextView sMessage;
     private void onShareButtonSelected(){
+        /// tao dialog
+        AlertDialog.Builder shareDialog = new AlertDialog.Builder(this);
+
+        View shareView = getLayoutInflater().inflate(R.layout.layout_share_dialog, null);
+        shareDialog.setView(shareView);
+        shareDialog.create();
+        shareDialog.show();
+
+        // lay cac control trong shareView
+        sTitle = (TextView) shareView.findViewById(R.id.tvDialogTitle);
+        sMessage = (TextView) shareView.findViewById(R.id.tvDialogMessage);
+        Button sLeftButton = (Button) shareView.findViewById(R.id.btnDialogLeft);
+        Button sRightButton = (Button) shareView.findViewById(R.id.btnDialogRight);
+
+        sLeftButton.setOnClickListener(shareDialogButtonOnClick);
+        sRightButton.setOnClickListener(shareDialogButtonOnClick);
 
     }
+    private View.OnClickListener shareDialogButtonOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(view.getId() == R.id.btnDialogLeft){
+                // dismiss
+                onBackPressed();
+            }
+            else if(view.getId() == R.id.btnDialogRight){
+                // share
+                String shareBody = sMessage.getText().toString();
+                String shareSubject = sTitle.getText().toString();
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, shareSubject);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, getString(R.string.main_share_by_using)));
+            }
+        }
+    };
+
     /**
     * Mo ung dung MAIL va soan tin nhan den dia chi mail: abc.....
     * */
@@ -192,11 +234,11 @@ public class MainActivity extends AppCompatActivity
         {
             Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
             emailIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            emailIntent.setType("vnd.android.cursor.item/email");
-            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {"tanpn2402@gmail.com"});
-            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Bugs and Issues");
-            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Type your issue");
-            startActivity(Intent.createChooser(emailIntent, "Send mail using..."));
+            emailIntent.setType("message/rfc822");
+            emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {getString(R.string.main_contact_email)});
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.main_contact_subject));
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.main_contact_text));
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.main_contact_by_using)));
         }
         catch(Exception ex)
         {

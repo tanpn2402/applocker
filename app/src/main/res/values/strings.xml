@@ -46,11 +46,25 @@
     <string name="main_title_allapp">Tất cả Ứng dụng</string>
     <string name="main_title_setting">Cài đặt</string>
 
+    <string name="main_contact_email">tanpn2402@gmail.com</string>
+    <string name="main_contact_subject">Góp ý</string>
+    <string name="main_contact_text">Nhập lời góp ý của bạn ở đây...</string>
+    <string name="main_contact_by_using">Gửi bằng...</string>
+
+    <string name="main_share_by_using">Chia sẻ bằng...</string>
 
     <!-- trong file menu/main_menu-->
     <string name="main_menu_sort">Sắp xếp</string>
     <string name="main_menu_lock_all">Khóa tất cả</string>
     <string name="main_menu_unlock_all">Hủy khóa tất cả</string>
     <string name="main_menu_undo">Làm lại</string>
+
+
+    <!--trong file AppListAdapter-->
+    <string name="adapter_system_ui_app">Giao diện hệ thống</string>
+    <string name="adapter_intaller_app">Bộ cài đặt</string>
+    <string name="adapter_separator_system_app">Ứng dụng hệ thống</string>
+    <string name="adapter_separator_importance_app">Ứng dụng quan trọng</string>
+    <string name="adapter_separator_normal_app">Ứng dụng</string>
 
 </resources>
