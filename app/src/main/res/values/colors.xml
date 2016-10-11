@@ -6,4 +6,9 @@
 
     // trong file layout_applistadapter_separator
     <color name="applistadapter_separator">#127871</color>
+
+    // button color
+    <color name="button_selector_normal">#fff</color>
+    <color name="button_selector_press">#cadbff</color>
+
 </resources>
