@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.tanpn.applocker.fragments.AppsFragment;
 import com.tanpn.applocker.fragments.SettingsFragment;
+import com.tanpn.applocker.lockservice.AppLockService;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity
 
         // set title
         setTitle(TITLE_ALL_APP);
+
+        // start service
+        toggleService();
     }
 
     @Override
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    final String tag = "APPLOCK_123: ";
+    final String tag = "tag";
 
     @Override
     protected void onPause() {
@@ -97,15 +101,29 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        Log.i(tag, "resume");
+        //Log.i(tag, "resume");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.i(tag, "destroy");
+        //Log.i(tag, "destroy");
     }
+
+
+    private void toggleService(){
+        Log.i(tag, "toggle service");
+
+        if(AppLockService.isRunning(this)){
+            // service is running
+        }
+        else{
+            // service has been stopped
+            AppLockService.toggle(this);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
