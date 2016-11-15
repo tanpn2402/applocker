@@ -8,15 +8,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
+import android.os.Binder;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 
-import com.tanpn.applocker.lockscreen.PasswordView;
-import com.tanpn.applocker.utils.PreUtils;
 import com.tanpn.applocker.R;
+import com.tanpn.applocker.utils.PreUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +43,8 @@ public class AppLockService extends Service {
 
     private BroadcastReceiver screenReceiver;
     private Map<String, Boolean> lockedPackages;
+    private Map<String, Runnable> mUnlockMap;
+
     private ActivityManager mActivityManager;
     private final String TAG = "tag";
 
@@ -56,7 +58,13 @@ public class AppLockService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return new LocalBinder();
+    }
+
+    public class LocalBinder extends Binder {
+        public AppLockService getInstance() {
+            return AppLockService.this;
+        }
     }
 
 
@@ -69,16 +77,16 @@ public class AppLockService extends Service {
                 // khi man hinh mo: thi khong co gi xay ra
                 Log.i(TAG, "Screen ON");
                 // Trigger package again
-                //mLastPackageName = "";
-                //startAlarm(AppLockService.this);
+                lastPackageName = "";
+                startAlarm(AppLockService.this);
             }
             if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                 //khi man hinh tat thi khoa tat ca cac ung dung (neu co setting)
                 Log.i(TAG, "Screen OFF");
-                //stopAlarm(AppLockService.this);
-                /*if (relockScreenOff) {
+                stopAlarm(AppLockService.this);
+                if (relockScreenOff) {
                     lockAll();
-                }*/
+                }
             }
         }
     }
@@ -98,8 +106,9 @@ public class AppLockService extends Service {
         }*/
 
         mActivityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-
+        mHandler = new Handler();
         lockedPackages = new HashMap<>();
+        mUnlockMap = new HashMap<>();
         screenReceiver = new ScreenReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_SCREEN_ON);
@@ -115,9 +124,9 @@ public class AppLockService extends Service {
 
         PreUtils prefs = new PreUtils(this);    // tao doi tuong preference utils
         // lay phan setting: khoa khi tat man hinh
-        /*relockScreenOff = prefs.getBoolean(
+        relockScreenOff = prefs.getBoolean(
                 R.string.pref_key_relock_after_screenoff,
-                R.bool.pref_def_relock_after_screenoff);*/
+                R.bool.pref_def_relock_after_screenoff);
 
         return true;
     }
@@ -131,55 +140,6 @@ public class AppLockService extends Service {
     }
 
 
-
-    public int findPIDbyPackageName(String packagename) {
-        int result = -1;
-
-        if (mActivityManager != null) {
-            for (ActivityManager.RunningAppProcessInfo pi : mActivityManager.getRunningAppProcesses()){
-                if (pi.processName.equalsIgnoreCase(packagename)) {
-                    result = pi.pid;
-                    Log.i(TAG, "PID = " + result);
-                }
-                if (result != -1)
-                    break;
-            }
-        } else {
-            result = -1;
-        }
-
-        return result;
-    }
-
-    public boolean killProcessByID(String packagename) {
-        boolean isKill = true;
-        if(findPIDbyPackageName(packagename) != -1){
-            // neu con ton tai process
-            Log.i(TAG, "Process is running");
-            try{
-                android.os.Process.killProcess(findPIDbyPackageName(packagename));
-            }
-            catch (Exception ex){
-                isKill = false;
-            }
-        }
-
-        return isKill;
-    }
-
-    public boolean killPackageProcesses(String packagename) {
-        boolean result = false;
-
-        if (mActivityManager != null) {
-            // kill process by Activity Manager
-            mActivityManager.killBackgroundProcesses(packagename);
-
-            // kiem tra xem process co duoc kill hay chua, neu chua thi kill by android.os
-            result = killProcessByID(packagename);
-        }
-
-        return result;
-    }
 
     private String getPackageStarted() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -236,16 +196,36 @@ public class AppLockService extends Service {
         if(locked){
             Log.i(TAG, openPackage + " locked");
 
-            showLockScreen();
+            showLockScreen(openPackage);
         }
+
+
+        removeRelockTimer(openPackage);
     }
 
-    private void showLockScreen(){
+    private void showLockScreen(String packageName){
         // hien thi man hinh khoa
             Log.i(TAG, "Show Lock Screennnnnn");
+        // tạo 1 intent để hiện thị màn hình khóa, LockService được thực thi
+        Intent intent = LockService.getLockIntent(this, packageName);
+        intent.setAction(LockService.ACTION_COMPARE);
+        intent.putExtra(LockService.EXTRA_PACKAGENAME, packageName);
+        startService(intent);
     }
 
+    /**
+     * Mở khóa app: Khi nhập mật khẩu đúng, được gọi từ class LockSerive
+     * */
+    public void unlockApp(String packageName) {
+        Log.d(TAG, "unlocking app (packageName=" + packageName + ")");
+        if (lockedPackages.containsKey(packageName)) {
+            lockedPackages.put(packageName, false);
+        }
+    }
     private void onAppClose(final String closePackage, final String openPackage){
+        // Khi 1 app bi khoa ma bị close --> relock nếu có setting
+
+
         // kiem tra xem app duoc close co nam trong danh sach khoa hay khong
         if(lockedPackages.containsKey(closePackage)){
             // co
@@ -254,6 +234,10 @@ public class AppLockService extends Service {
     }
 
     private void onLockAppClose(final String closePackage, final String openPackage){
+
+        setRelockTimer(closePackage);
+
+
         if(getPackageName().equals(closePackage) || getPackageName().equals(openPackage)){
             // khi ma app duoc close == ten app cua minh
             // hoac app duoc open == ten app cua minh
@@ -269,6 +253,67 @@ public class AppLockService extends Service {
 
         /// hide lock screen
         //....
+        LockService.hide(this);
+    }
+
+
+    void lockApp(String packageName) {
+        if (lockedPackages.containsKey(packageName)) {
+            lockedPackages.put(packageName, true);
+        }
+    }
+
+    private class RelockRunnable implements Runnable {
+        private final String mPackageName;
+
+        public RelockRunnable(String packageName) {
+            mPackageName = packageName;
+        }
+
+        @Override
+        public void run() {
+            lockApp(mPackageName);
+        }
+    }
+
+
+    private long mShortExitMillis = 1; // thời gian khóa app sau khi app đó bị close, = 0 tức là bị disable
+    private Handler mHandler;
+
+    private void setRelockTimer(String packageName) {
+        //khóa app sau 1 thời gian, thời gian này được đặt trong phần setting
+        // kiểm tra xem app này có khóa hay không
+
+        if(lockedPackages.size() == 0)
+            return;
+        boolean locked = lockedPackages.get(packageName);
+        if (!locked) {
+            // nếu không khóa
+            if (mShortExitMillis != 0) {
+                // mShortExitMillis: khóa app sau x (s)
+                // tạo 1 biến Handler
+                // có 1 class RelockRunnable, được implements từ class Runnable, được dùng để tạo thời gian chờ mShortExitMillis (s)
+                Runnable r = new RelockRunnable(packageName);
+                mHandler.postDelayed(r, mShortExitMillis);
+
+
+                mUnlockMap.put(packageName, r);
+            } else {
+                // nếu mShortExitMillis = 0, thì khóa ngay sau đó
+                lockApp(packageName);
+            }
+        }
+    }
+
+    // Xóa đi sự kiện ( Runable) relocktimertimer
+    // mUnlockMap chứa key = tên package, values = runable RelockTimer
+    private void removeRelockTimer(String packageName) {
+        // boolean locked = mLockedPackages.get(packageName);
+        // if (!locked) {
+        if (mUnlockMap.containsKey(packageName)) {
+            mHandler.removeCallbacks(mUnlockMap.get(packageName));
+            mUnlockMap.remove(packageName);
+        }
     }
 
     private boolean explicitStarted;
@@ -334,12 +379,12 @@ public class AppLockService extends Service {
     // duoc dung de bat/tat service
     public static boolean toggle(Context c){
         if(isRunning(c)){
-            Log.i("tag", "toggle - stop");
+            Log.i("tag:", "toggle - stop");
             stopAppLockService(c);
             return false;
         }
         else{
-            Log.i("tag", "toggle - start");
+            Log.i("tag:", "toggle - start");
             startAppLockService(c);
             return true;
         }
@@ -472,5 +517,16 @@ public class AppLockService extends Service {
         }
 
         allowDestroy = false;
+    }
+
+    /**
+     * Forces the service to stop and then start again. This means that if the
+     * service was already stopped, it will just start
+     */
+    public static void forceRestart(Context c) {
+        Intent i = new Intent(c, AppLockService.class);
+        i.setAction(ACTION_RESTART);
+        i.putExtra(EXTRA_FORCE_RESTART, true);
+        c.startService(i);
     }
 }

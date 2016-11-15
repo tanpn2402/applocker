@@ -11,4 +11,20 @@
     <color name="button_selector_normal">#fff</color>
     <color name="button_selector_press">#cadbff</color>
 
+    <!--button color in lock screen-->
+    <color name="passwordview_button_background">#074a5c</color>
+
+    <color name="locker_overlay">#48333333</color>
+
+    <!-- flatuicolors.com -->
+    <color name="flat_green">#1F8B4D</color>
+    <color name="flat_blue">#2980b9</color>
+    <color name="flat_dark_blue">#336699</color>
+    <color name="flat_purple">#9b59b6</color>
+    <color name="flat_red">#c0392b</color>
+    <color name="flat_turquoise">#16a085</color>
+    <color name="flat_orange">#e67e22</color>
+
+    <color name="black_overlay">#66000000</color>
+
 </resources>

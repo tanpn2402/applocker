@@ -1,5 +1,6 @@
 package com.tanpn.applocker;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,6 +24,9 @@ import android.widget.Toast;
 import com.tanpn.applocker.fragments.AppsFragment;
 import com.tanpn.applocker.fragments.SettingsFragment;
 import com.tanpn.applocker.lockservice.AppLockService;
+import com.tanpn.applocker.lockservice.LockPreferences;
+import com.tanpn.applocker.lockservice.LockService;
+import com.tanpn.applocker.utils.PreUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity
 
     final String TITLE_ALL_APP = "Tất cả Ứng dụng";
     final String TITLE_SETTING = "Cài đặt";
+
+    private static final String EXTRA_UNLOCKED = "com.twinone.locker.unlocked";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +73,59 @@ public class MainActivity extends AppCompatActivity
 
         // start service
         toggleService();
+
+
+        showLockerIfNotUnlocked(false);
+
+        showDialogChoosePasswordType();
+    }
+
+    private boolean checkEmptyPassword(){
+        // kiem tra xem day co phai la lan dau su dung hay khng
+        // hoac kiem tra xem mat khau co null hay khong
+
+        PreUtils preUtils = new PreUtils(this);
+        boolean b = preUtils.isCurrentPasswordEmpty();
+        Log.i("TAG", b ?  "true" : "false");
+
+
+
+        return preUtils.isCurrentPasswordEmpty();
+    }
+
+    private void showDialogChoosePasswordType(){
+        if (!checkEmptyPassword())
+            return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Choose password type");
+        builder.setMessage("To start using App Lock, please choose and set your passwor");
+
+        builder.setPositiveButton("Pattern", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.i("TAG", "choose pattern");
+                createNewLock(LockPreferences.TYPE_PATTERN);
+
+            }
+        });
+
+        builder.setNegativeButton("Password", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Log.i("TAG", "Choose password");
+                createNewLock(LockPreferences.TYPE_PASSWORD);
+
+            }
+        });
+
+        builder.create();
+        builder.show();
+    }
+
+    private void createNewLock(int type){
+        LockService.showCreate(this, type);
     }
 
     @Override
@@ -101,6 +160,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
+        showLockerIfNotUnlocked(true);
         //Log.i(tag, "resume");
     }
 
@@ -262,5 +322,17 @@ public class MainActivity extends AppCompatActivity
         {
             Toast.makeText(this, "Some problems while open email app", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    private void showLockerIfNotUnlocked(boolean relock) {
+        boolean unlocked = getIntent().getBooleanExtra(EXTRA_UNLOCKED, false);
+        if (new PreUtils(this).isCurrentPasswordEmpty()) {
+            unlocked = true;
+        }
+        if (!unlocked) {
+            LockService.showCompare(this, getPackageName());
+        }
+        getIntent().putExtra(EXTRA_UNLOCKED, !relock);
     }
 }

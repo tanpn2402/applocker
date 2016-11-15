@@ -67,4 +67,22 @@
     <string name="adapter_separator_importance_app">Ứng dụng quan trọng</string>
     <string name="adapter_separator_normal_app">Ứng dụng</string>
 
+    <!---->
+    <string name="button_confirm">Confirm</string>
+    <string name="button_continue">Next</string>
+    <string name="button_back">Back</string>
+
+
+    <!-- PASSWORD -->
+    <string name="password_change_tit">Change password</string>
+    <string name="password_change_head">Enter a new unlock password</string>
+    <string name="password_change_confirm">Enter the password again to confirm</string>
+    <string name="password_change_saved">Password changed successfully</string>
+    <string name="password_change_error">Error saving password</string>
+    <string name="password_change_not_match">Passwords do not match</string>
+    <string name="password_empty">Password cannot be empty</string>
+
+    <string name="title_activity_intro_view">IntroView</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
