@@ -81,12 +81,21 @@ public class PreUtils {
         return prefs.getString(context.getString(keyResId), null);
     }
 
+	/**
+	lấy string với key = keyResId
+	nếu k có giá trị nào có key bằng nó thì lấy giá trị mặc định có key = defResId
+	
+	*/
     public String getString(int keyResId, int defResId) {
         final String key = context.getString(keyResId);
         return (prefs.contains(key)) ? prefs.getString(key, null) : context
                 .getString(defResId);
     }
-
+	/**
+	lấy string với key = keyResId
+	nếu k có giá trị nào có key bằng nó thì lấy giá trị mặc định = defValue
+	
+	*/
     public String getString(int keyResId, String defValue) {
         return prefs.getString(context.getString(keyResId), defValue);
     }
