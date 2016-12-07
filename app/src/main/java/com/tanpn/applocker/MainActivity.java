@@ -26,6 +26,8 @@ import com.tanpn.applocker.fragments.SettingsFragment;
 import com.tanpn.applocker.lockservice.AppLockService;
 import com.tanpn.applocker.lockservice.LockPreferences;
 import com.tanpn.applocker.lockservice.LockService;
+import com.tanpn.applocker.user.AccountActivity;
+import com.tanpn.applocker.user.Dashboard;
 import com.tanpn.applocker.utils.PreUtils;
 
 public class MainActivity extends AppCompatActivity
@@ -240,6 +242,10 @@ public class MainActivity extends AppCompatActivity
             onShareButtonSelected();
         } else if (id == R.id.nav_rate) {
             onRateButtonSelected();
+        }
+        else if(id == R.id.nav_user){
+            Intent intent = new Intent(this, Dashboard.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
