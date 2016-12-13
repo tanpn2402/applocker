@@ -1,80 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <SwitchPreference android:key="lock_enable"
+    <SwitchPreference android:key="@string/pref_key_lock_enable"
             android:title="@string/setting_lock_enable"
             android:defaultValue="true"/>
 
-    <ListPreference android:key="lock_background"
+
+
+    <PreferenceCategory
+        android:title="@string/setting_title_general"
+        android:key="@string/pref_key_setting_title_general">
+
+        <ListPreference android:key="@string/pref_key_lock_background"
             android:title="@string/setting_lock_background"
             android:summary="@string/setting_lock_background_summary"
             android:entries="@array/setting_lock_background"
             android:entryValues="@array/setting_lock_background_val"
             android:defaultValue="0"/>
 
-    <PreferenceCategory android:title="@string/setting_title_general">
+        <CheckBoxPreference android:key="@string/pref_key_setting_press_vibra"
+            android:title="@string/setting_vibration_press_summary"
+            android:defaultValue="true" />
 
-        <CheckBoxPreference android:key="setting_vibra"
+        <CheckBoxPreference android:key="@string/pref_key_setting_vibra"
             android:title="@string/setting_vibration_summary"
             android:defaultValue="true" />
 
-        <CheckBoxPreference android:key="setting_start_at_boot"
+        <CheckBoxPreference android:key="@string/pref_key_setting_start_at_boot"
             android:title="@string/setting_general_start_at_boot"
             android:defaultValue="true"/>
 
 
-        <CheckBoxPreference android:key="setting_lock_after_screenoff"
-            android:title="@string/setting_general_relock_after_screen_off"
-            android:defaultValue="true"/>
 
-        <EditTextPreference android:key="setting_wrong_time"
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/setting_title_password"
+        android:key = "@string/pref_key_setting_title_password">
+
+        <ListPreference android:key="@string/pref_key_setting_wrong_time"
             android:title="@string/setting_general_wrong_time_title"
-            android:dialogTitle="@string/setting_general_wrong_time_title"
-            android:dialogMessage="@string/setting_general_wrong_time_input"
-            android:numeric="decimal"
-            android:defaultValue="5"/>
+            android:summary="@string/setting_general_wrong_time_title"
+            android:entries="@array/setting_wrong_times"
+            android:entryValues="@array/setting_wrong_times_values"
+            android:defaultValue="0"/>
 
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/setting_title_password">
-
-        <EditTextPreference android:key="setting_wrong_time"
-            android:title="@string/setting_change_password"
-            android:dialogTitle="@string/setting_change_password"
-            android:dialogMessage="@string/setting_change_password"
-            android:defaultValue="5"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/setting_title_patern">
-
-        <EditTextPreference android:key="setting_wrong_time"
-            android:title="@string/setting_change_password"
-            android:dialogTitle="@string/setting_change_password"
-            android:dialogMessage="@string/setting_change_password"
-            android:defaultValue="5"/>
+        <Preference android:key="@string/pref_key_setting_change_pwrd_pass"
+            android:title="@string/setting_change_password" />
 
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/setting_title_user">
-
-        <Preference
-            android:title="@string/setting_user_full_name"
-            android:summary="@string/setting_user_full_name_summary"/>
-
-        <Preference
-            android:title="@string/setting_user_name"
-            android:summary="@string/setting_user_name_summary"/>
-
-        <Preference
-            android:title="@string/setting_user_email"
-            android:summary="@string/setting_user_email_summary"/>
-
-        <Preference
-            android:title="@string/setting_user_phone"
-            android:summary="@string/setting_user_phone_summary"/>
-
-    </PreferenceCategory>
 
 </PreferenceScreen>

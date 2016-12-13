@@ -1,8 +1,10 @@
 package com.tanpn.applocker.fragments;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +17,9 @@ import android.widget.ListView;
 import com.tanpn.applocker.R;
 import com.tanpn.applocker.applist.AppListAdapter;
 import com.tanpn.applocker.applist.AppListElement;
+import com.tanpn.applocker.sqlite.SQLAppPassword;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +53,12 @@ public class AppsFragment extends Fragment implements AppListAdapter.OnEventList
 
         // co menu layout o tren thanh action bar
         setHasOptionsMenu(true);
+
+
+
+        // khởi tạo các app được khóa bằng phân quyền
+        // hiển thị thông báo khi muốn mở khóa những app này
+        listAppLocked = new SQLAppPassword(getContext()).getAllAppsLocked();
 
         return v;
     }
@@ -103,16 +114,37 @@ public class AppsFragment extends Fragment implements AppListAdapter.OnEventList
 
     }
 
+    private AlertDialog.Builder showAlert(String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Cảnh báo");
+        builder.setMessage(message);
+        builder.setNegativeButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+
+        return builder;
+    }
+    private List<String> listAppLocked;
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         AppListElement item = (AppListElement) adapterView.getItemAtPosition(i);
         if(item.isApp()){
 
-            adapter.toggle(item);
-            view.findViewById(R.id.imApplist_item_lock).setVisibility( item.locked ? View.VISIBLE : View.GONE);
-            //item.locked = !item.locked;
-            onDirtyStateChanged(true);
-            //adapter.notifyDirtyStateChanged(true);
+            if(listAppLocked.contains(item.packageName)){
+                // đây là app được khóa bằng phân quyền
+                // hiện thị thông báo là bạn không có quyền mở khóa app này
+                showAlert("Bạn không có quyền mở khóa ứng dụng này.").create().show();
+            }
+            else{
+                adapter.toggle(item);
+                view.findViewById(R.id.imApplist_item_lock).setVisibility( item.locked ? View.VISIBLE : View.GONE);
+                //item.locked = !item.locked;
+                onDirtyStateChanged(true);
+                //adapter.notifyDirtyStateChanged(true);
+            }
+
         }
     }
 

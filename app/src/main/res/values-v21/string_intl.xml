@@ -71,16 +71,7 @@
     <string translatable="false" name="pref_val_anim_slide_right">anim_slide_right</string>
     <string translatable="false" name="pref_val_anim_none">anim_none</string>
 
-    <!--  -->
-    <string translatable="false" name="pref_val_bg_default">bg_none</string>
-    <string translatable="false" name="pref_val_bg_gallery">bg_gallery</string>
-    <string translatable="false" name="pref_val_bg_green">bg_green</string>
-    <string translatable="false" name="pref_val_bg_red">bg_red</string>
-    <string translatable="false" name="pref_val_bg_blue">bg_blue</string>
-    <string translatable="false" name="pref_val_bg_dark_blue">bg_dark_blue</string>
-    <string translatable="false" name="pref_val_bg_turquoise">bg_turquoise</string>
-    <string translatable="false" name="pref_val_bg_purple">bg_purple</string>
-    <string translatable="false" name="pref_val_bg_orange">bg_orange</string>
+
 
     <string translatable="false" name="pref_def_password_expiry">0</string>
     <string translatable="false" name="pref_def_max_password_retries">0</string>
@@ -90,23 +81,7 @@
     <string translatable="false" name="pref_def_anim_hide_millis">300</string>
     <string translatable="false" name="pref_def_pattern_size">3</string>
 
-    <!-- Preference defaults -->
-    <item name="pref_def_background" type="string">@string/pref_val_bg_default</item>
-    <item name="pref_def_anim_show_type" type="string">@string/pref_val_anim_fade</item>
-    <item name="pref_def_anim_hide_type" type="string">@string/pref_val_anim_fade</item>
-    <item name="pref_def_lock_type" type="string">@string/pref_val_lock_type_password</item>
-    <item name="pref_def_vibrate" type="bool">true</item>
-    <item name="pref_def_switch_buttons" type="bool">false</item>
-    <item name="pref_def_pattern_size" type="integer">3</item>
-    <item name="pref_def_show_notification" type="bool">false</item>
-    <item name="pref_def_hide_notification_icon" type="bool">false</item>
-    <item name="pref_def_hide_launcher_icon" type="bool">false</item>
-    <item name="pref_def_dial_launch" type="bool">false</item>
-    <item name="pref_def_delay_status" type="bool">false</item>
-    <item name="pref_def_relock_after_screenoff" type="bool">true</item>
-    <item name="pref_def_start_boot" type="bool">true</item>
-    <item name="pref_def_pattern_stealth" type="bool">false</item>
-    <item name="pref_def_pattern_error_stealth" type="bool">false</item>
+
 
     <string translatable="false" name="pref_def_delay_time">60</string>
 
@@ -135,5 +110,60 @@
     <string translatable="false" name="nav_key_settings">settings</string>
     <string translatable="false" name="nav_key_statistics">statistics</string>
     <string translatable="false" name="nav_key_pro">Pro</string>
+
+
+    <!--key  (tanpn)-->
+    <string translatable="false" name="pref_key_user_password">com.tanpn.applock.pref.user_password</string>
+    <string translatable="false" name="pref_key_user_email">com.tanpn.applock.pref.user_email</string>
+    <string translatable="false" name="pref_key_user_fullname">com.tanpn.applock.pref.user_fullname</string>
+    <string translatable="false" name="pref_key_user_id">com.tanpn.applock.pref.user_id</string>
+    <string translatable="false" name="pref_key_user_name">com.tanpn.applock.pref.user_name</string>
+
+
+    <string translatable="false" name="pref_key_first_use">com.tanpn.applock.pref.first_use</string>
+
+    <string translatable="false" name="pref_key_lock_enable">com.tanpn.applock.pref.lock_enable</string>
+    <string translatable="false" name="pref_key_lock_background">com.tanpn.applock.pref.lock_background</string>
+    <string translatable="false" name="pref_key_setting_vibra">com.tanpn.applock.pref.setting_vibra</string>
+    <string translatable="false" name="pref_key_setting_press_vibra">com.tanpn.applock.pref.setting_vibra</string>
+
+    <string translatable="false" name="pref_key_setting_start_at_boot">com.tanpn.applock.pref.setting_start_at_boot</string>
+    <string translatable="false" name="pref_key_setting_wrong_time">com.tanpn.applock.pref.setting_wrong_time</string>
+    <string translatable="false" name="pref_key_setting_title_general">com.tanpn.applock.pref.setting_title_general</string>
+    <string translatable="false" name="pref_key_setting_title_password">com.tanpn.applock.pref.setting_title_password</string>
+
+    <string translatable="false" name="pref_key_setting_change_pwrd_pass">com.tanpn.applock.pref.setting_change_pwrd_pass</string>
+    <string translatable="false" name="pref_key_setting_change_pwrd_pat">com.tanpn.applock.pref.setting_change_pwrd_pat</string>
+    <string translatable="false" name="pref_key_setting_user_phone">com.tanpn.applock.pref.setting_user_phone</string>
+
+    <!-- background color -->
+    <string translatable="false" name="pref_val_bg_default">bg_none</string>
+    <string translatable="false" name="pref_val_bg_gallery">bg_gallery</string>
+    <string translatable="false" name="pref_val_bg_green">bg_green</string>
+    <string translatable="false" name="pref_val_bg_red">bg_red</string>
+    <string translatable="false" name="pref_val_bg_blue">bg_blue</string>
+    <string translatable="false" name="pref_val_bg_dark_blue">bg_dark_blue</string>
+    <string translatable="false" name="pref_val_bg_turquoise">bg_turquoise</string>
+    <string translatable="false" name="pref_val_bg_purple">bg_purple</string>
+    <string translatable="false" name="pref_val_bg_orange">bg_orange</string>
+
+    <!-- Preference defaults -->
+    <item name="pref_def_background" type="string">@string/pref_val_bg_default</item>
+    <item name="pref_def_anim_show_type" type="string">@string/pref_val_anim_fade</item>
+    <item name="pref_def_anim_hide_type" type="string">@string/pref_val_anim_fade</item>
+    <item name="pref_def_lock_type" type="string">@string/pref_val_lock_type_password</item>
+    <item name="pref_def_vibrate" type="bool">true</item>
+    <item name="pref_def_switch_buttons" type="bool">false</item>
+    <item name="pref_def_pattern_size" type="integer">3</item>
+    <item name="pref_def_show_notification" type="bool">false</item>
+    <item name="pref_def_hide_notification_icon" type="bool">false</item>
+    <item name="pref_def_hide_launcher_icon" type="bool">false</item>
+    <item name="pref_def_dial_launch" type="bool">false</item>
+    <item name="pref_def_delay_status" type="bool">false</item>
+    <item name="pref_def_relock_after_screenoff" type="bool">true</item>
+    <item name="pref_def_start_boot" type="bool">true</item>
+    <item name="pref_def_pattern_stealth" type="bool">false</item>
+    <item name="pref_def_pattern_error_stealth" type="bool">false</item>
+
 
 </resources>

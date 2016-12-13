@@ -1,0 +1,58 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    tools:context="com.tanpn.applocker.user.AppUsageDetail">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Thêm nhóm"
+        android:id="@+id/textView5"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtGroupName"
+        android:background="@drawable/edittext_background"
+        android:textAlignment="center"
+        android:hint="tên nhóm"
+        android:textColorHint="#5c000000"
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNewGroup"
+        android:background="@drawable/button_signin"
+        android:text="Xong"
+        android:layout_below="@+id/btnChoosePassword"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btnChoosePassword"
+        android:layout_alignEnd="@+id/btnChoosePassword" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnChoosePassword"
+        android:background="@drawable/button_signin"
+        android:text="Chọn mật khâu"
+        android:layout_below="@+id/edtGroupName"
+        android:layout_marginTop="20dp"
+        android:layout_alignRight="@+id/edtGroupName"
+        android:layout_alignEnd="@+id/edtGroupName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

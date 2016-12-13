@@ -56,16 +56,7 @@ public class AppListElement implements Comparable<AppListElement> {
         this.priority = priority;
     }
 
-    /** For non activity apps */
-    public AppListElement(String label, String packageName, int priority) {
-        this.title = label;
-        this.icon = null;
-        this.packageName = packageName;
-        this.priority = priority;
-
-    }
-
-
+  
 
     // kiem tra xem Element nay la app hay la separator
     public boolean isApp() {
@@ -87,7 +78,6 @@ public class AppListElement implements Comparable<AppListElement> {
 
     @Override
     public boolean equals(Object obj) {
-        Log.i("aaaaaa", "equals");
         if (obj == null)
             return false;
         if (!(obj instanceof AppListElement))

@@ -9,8 +9,14 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by phamt_000 on 9/21/16.
@@ -43,11 +49,6 @@ public class utils {
 
 
 
-    // tao dialog share
-    public static AlertDialog createAlerDialog(String title, String message, String leftButtonText, String rightButtonText){
-
-        return null;
-    }
 
 
     @SuppressLint("NewApi")
@@ -71,6 +72,16 @@ public class utils {
             return null;
         }
     }
+
+    public static String getCurrentTimeStamp() {
+        String date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+
+        Log.i("test", date  );
+        return date + "|" + time;
+    }
+
+
 
 
 }

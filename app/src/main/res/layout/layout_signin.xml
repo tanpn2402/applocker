@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="#00ffffff">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtUsername"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:hint="email"
+        android:background="@drawable/edittext_background"
+        android:textColorHint="#75000000"
+        android:inputType="textVisiblePassword">
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/edtOldPass"
+        android:textColor="#000"
+        android:textColorHint="#75000000"
+        android:hint="mật khẩu"
+        android:background="@drawable/edittext_background"
+        android:textAlignment="center"
+        android:inputType="textPassword" />
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Đăng nhập"
+        android:textAllCaps="false"
+        android:background="@drawable/button_signin"
+        android:textColor="#fff"
+        android:id="@+id/btnChangePassword"
+        />
+
+</LinearLayout>

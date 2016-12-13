@@ -20,9 +20,9 @@ public class PreUtils {
 
     // file app_lock_list ( ~ app_lock_list.xml): luu cac gia tri cua app lock list
     public static String PREF_FILE_APPS = "app_lock_list";
-    public static final String PREF_FILE_DEFAULT = "com.twinone.locker.prefs.default";
+    public static final String PREF_FILE_DEFAULT = "com.tanpn.applocker.prefs.default";
 
-    private static final String ALIAS_CLASSNAME = "com.twinone.locker.MainActivityAlias";
+    private static final String ALIAS_CLASSNAME = "com.tanpn.applocker.MainActivityAlias";
 
 
 
@@ -81,21 +81,12 @@ public class PreUtils {
         return prefs.getString(context.getString(keyResId), null);
     }
 
-	/**
-	lấy string với key = keyResId
-	nếu k có giá trị nào có key bằng nó thì lấy giá trị mặc định có key = defResId
-	
-	*/
     public String getString(int keyResId, int defResId) {
         final String key = context.getString(keyResId);
         return (prefs.contains(key)) ? prefs.getString(key, null) : context
                 .getString(defResId);
     }
-	/**
-	lấy string với key = keyResId
-	nếu k có giá trị nào có key bằng nó thì lấy giá trị mặc định = defValue
-	
-	*/
+
     public String getString(int keyResId, String defValue) {
         return prefs.getString(context.getString(keyResId), defValue);
     }
@@ -119,6 +110,11 @@ public class PreUtils {
         final Integer result = parseInt(keyResId);
         return (result != null) ? result : Integer.parseInt(context
                 .getString(defResId));
+    }
+
+    public Integer getInt(int keyResId, int defInt){
+        final Integer result = parseInt(keyResId);
+        return (result != null) ? result : defInt;
     }
 
     /**
@@ -151,6 +147,11 @@ public class PreUtils {
     private Boolean getBooleanOrNull(int keyResId) {
         final String key = context.getString(keyResId);
         return (prefs.contains(key)) ? prefs.getBoolean(key, false) : null;
+    }
+
+    public Boolean getBoolean(int keyResId, boolean defVal){
+        final String key = context.getString(keyResId);
+        return (prefs.contains(key)) ? prefs.getBoolean(key, defVal) : defVal;
     }
 
     public Float getFloatOrNull(int keyResId) {

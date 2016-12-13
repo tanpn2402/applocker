@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -26,6 +27,8 @@ import com.tanpn.applocker.fragments.SettingsFragment;
 import com.tanpn.applocker.lockservice.AppLockService;
 import com.tanpn.applocker.lockservice.LockPreferences;
 import com.tanpn.applocker.lockservice.LockService;
+import com.tanpn.applocker.user.Dashboard;
+import com.tanpn.applocker.user.Signin;
 import com.tanpn.applocker.utils.PreUtils;
 
 public class MainActivity extends AppCompatActivity
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity
     final String TITLE_SETTING = "Cài đặt";
 
     private static final String EXTRA_UNLOCKED = "com.twinone.locker.unlocked";
-
+    private PreUtils preUtils;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        preUtils = new PreUtils(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -70,63 +73,10 @@ public class MainActivity extends AppCompatActivity
 
         // set title
         setTitle(TITLE_ALL_APP);
+;
 
-        // start service
-        toggleService();
-
-
-        showLockerIfNotUnlocked(false);
-
-        showDialogChoosePasswordType();
     }
 
-    private boolean checkEmptyPassword(){
-        // kiem tra xem day co phai la lan dau su dung hay khng
-        // hoac kiem tra xem mat khau co null hay khong
-
-        PreUtils preUtils = new PreUtils(this);
-        boolean b = preUtils.isCurrentPasswordEmpty();
-        Log.i("TAG", b ?  "true" : "false");
-
-
-
-        return preUtils.isCurrentPasswordEmpty();
-    }
-
-    private void showDialogChoosePasswordType(){
-        if (!checkEmptyPassword())
-            return;
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Choose password type");
-        builder.setMessage("To start using App Lock, please choose and set your passwor");
-
-        builder.setPositiveButton("Pattern", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Log.i("TAG", "choose pattern");
-                createNewLock(LockPreferences.TYPE_PATTERN);
-
-            }
-        });
-
-        builder.setNegativeButton("Password", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Log.i("TAG", "Choose password");
-                createNewLock(LockPreferences.TYPE_PASSWORD);
-
-            }
-        });
-
-        builder.create();
-        builder.show();
-    }
-
-    private void createNewLock(int type){
-        LockService.showCreate(this, type);
-    }
 
     @Override
     public void setTitle(CharSequence title) {
@@ -151,8 +101,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-
-        Log.i(tag, "pause");
         finish();
     }
 
@@ -160,30 +108,13 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        showLockerIfNotUnlocked(true);
-        //Log.i(tag, "resume");
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        //Log.i(tag, "destroy");
     }
-
-
-    private void toggleService(){
-        Log.i(tag, "toggle service");
-
-        if(AppLockService.isRunning(this)){
-            // service is running
-        }
-        else{
-            // service has been stopped
-            AppLockService.toggle(this);
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -191,17 +122,6 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.global, menu);
         return true;
     }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -240,6 +160,10 @@ public class MainActivity extends AppCompatActivity
             onShareButtonSelected();
         } else if (id == R.id.nav_rate) {
             onRateButtonSelected();
+        }
+        else if(id == R.id.nav_user){
+            Intent intent = new Intent(this, Signin.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -322,17 +246,5 @@ public class MainActivity extends AppCompatActivity
         {
             Toast.makeText(this, "Some problems while open email app", Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    private void showLockerIfNotUnlocked(boolean relock) {
-        boolean unlocked = getIntent().getBooleanExtra(EXTRA_UNLOCKED, false);
-        if (new PreUtils(this).isCurrentPasswordEmpty()) {
-            unlocked = true;
-        }
-        if (!unlocked) {
-            LockService.showCompare(this, getPackageName());
-        }
-        getIntent().putExtra(EXTRA_UNLOCKED, !relock);
     }
 }
