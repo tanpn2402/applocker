@@ -252,6 +252,9 @@ public class PasswordView extends ViewGroup implements View.OnClickListener, Vie
     private boolean mStarted;
     @Override
     public void onClick(View v) {
+        if(isStop)
+            return;;
+
         if (!mStarted) {
             mListener.onStart();
             mStarted = true;
@@ -326,6 +329,9 @@ public class PasswordView extends ViewGroup implements View.OnClickListener, Vie
     // implemment từ OnLongClickListener
     @Override
     public boolean onLongClick(View v) {
+        if(isStop)
+            return true;
+
         if (!mStarted) {
             mListener.onStart();
             mStarted = true;
@@ -365,6 +371,10 @@ public class PasswordView extends ViewGroup implements View.OnClickListener, Vie
         }
     }
 
+    private boolean isStop = false;
+    public void removeListener(){
+        isStop = true;
+    }
 
     public void setPassword(String password) {
         this.mPassword = (password != null) ? password : "";

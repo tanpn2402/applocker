@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="#00ffffff">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtFullname"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:hint="họ tên"
+        android:textColorHint="#75000000"
+        android:background="@drawable/edittext_background"
+        android:inputType="textVisiblePassword"
+        android:layout_gravity="center_horizontal" >
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtUsername"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:hint="email"
+        android:textColorHint="#75000000"
+        android:background="@drawable/edittext_background"
+        android:inputType="textVisiblePassword"
+        android:layout_marginTop="10dp">
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/edtOldPass"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textColorHint="#75000000"
+        android:hint="mật khẩu"
+        android:background="@drawable/edittext_background"
+        android:inputType="textPassword" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Đăng kí"
+        android:textAllCaps="false"
+        android:background="@drawable/button_signin"
+        android:textColor="#FFF"
+        android:id="@+id/btnChangePassword"
+        />
+
+</LinearLayout>

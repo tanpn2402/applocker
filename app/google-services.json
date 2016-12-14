@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1086065665577",
+    "firebase_url": "https://applock-aeb39.firebaseio.com",
+    "project_id": "applock-aeb39",
+    "storage_bucket": "applock-aeb39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086065665577:android:d0bb38b8f15fdbef",
+        "android_client_info": {
+          "package_name": "com.tanpn.applocker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1086065665577-hhue5ls11ig663er5oitqcunpkc0vsar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6CEFyiM5Ypu2rx3wQG-qP5phR7_gHWdQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

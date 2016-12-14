@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:background="#00ffffff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Hãy nhập địa chỉ email đã đăng kí của bạn, mật khẩu của bạn sẽ được gửi về qua địa chỉ email này"
+        android:id="@+id/textView22"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18dp"
+        android:textColor="#FFF"
+        android:textAlignment="center" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtUsername"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:hint="email"
+        android:textColorHint="#75000000"
+        android:background="@drawable/edittext_background"
+        android:inputType="textVisiblePassword"
+        android:layout_marginTop="10dp">
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Lấy lại mật khẩu"
+        android:textAllCaps="false"
+        android:background="@drawable/button_signin"
+        android:textColor="#FFF"
+        android:id="@+id/btnChangePassword"
+        />
+
+</LinearLayout>

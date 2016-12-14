@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.tanpn.applocker.lockservice.AppLockService;
+import com.tanpn.applocker.sqlite.SQLAppPassword;
 import com.tanpn.applocker.utils.*;
 import com.tanpn.applocker.R;
 
@@ -116,9 +118,16 @@ public class AppListAdapter extends BaseAdapter {
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> appRunnable = pm.queryIntentActivities(i, 0);
 
-        for (ResolveInfo app : appRunnable) {
-            if (!context.getPackageName().equals(app.activityInfo.packageName)) {
+        final List<String> sysApp =  Arrays.asList(new String[] { "com.android.dialer" , "com.android.packageinstaller",
+                "com.android.systemui", "com.android.vending", "com.android.settings" , "", ""});
 
+
+        for (ResolveInfo app : appRunnable) {
+            if (!context.getPackageName().equals(app.activityInfo.packageName)
+                    && !sysApp.contains(app.activityInfo.packageName)) {
+
+                // nếu k phải là app của mình (AppLock và k phải những ứng dụng hệ thống (đã được lấy rồi)
+                // thì lấy
                 AppListElement element = new AppListElement(
                         app.loadLabel(pm).toString(), // lay label
                         app.loadIcon(pm),                          // icon
@@ -143,7 +152,18 @@ public class AppListAdapter extends BaseAdapter {
         // copy construction
         listItems = new ArrayList<>(initItems);
 
+        /**
+         * những app được khóa trong phân quyền cũng được hiển thị ổ khóa ở đây
+         * */
+        listAppLocked = new SQLAppPassword(context).getAllAppsLocked();
+        for(AppListElement a : listItems){
+            if(listAppLocked.contains(a.packageName)){
+                a.locked = true;
+            }
+        }
     }
+
+    private List<String> listAppLocked;
 
     private void getImportanceAndSystemApps(Collection<AppListElement> initItemList){
         //ArrayList<AppListElement> appElements = new ArrayList<>();
@@ -214,14 +234,6 @@ public class AppListAdapter extends BaseAdapter {
             // ket thuc for loop
         }
 
-        // them cac separator
-        /*if(isSystemApp){
-            initItemList.add(new AppListElement("System Apps", AppListElement.PRIORITY_SYSTEM_CATEGORY));
-        }
-
-        if(isImportantApp){
-            initItemList.add(new AppListElement("Importance App", AppListElement.PRIORITY_IMPORTANT_CATEGORY));
-        }*/
 
         initItemList.add(new AppListElement(context.getString(R.string.adapter_separator_system_app), AppListElement.PRIORITY_SYSTEM_CATEGORY));
         initItemList.add(new AppListElement(context.getString(R.string.adapter_separator_importance_app), AppListElement.PRIORITY_IMPORTANT_CATEGORY));
@@ -292,6 +304,9 @@ public class AppListAdapter extends BaseAdapter {
         imIcon.setImageBitmap(utils.drawableToBitmap(listItems.get(i).getIcon()));
 
         ImageView imApp_Lock = (ImageView) v.findViewById(R.id.imApplist_item_lock);
+        if(listAppLocked.contains(listItems.get(i).packageName)){
+            imApp_Lock.setImageResource(R.drawable.ic_action_secure_red);
+        }
         imApp_Lock.setVisibility(listItems.get(i).locked ? View.VISIBLE : View.GONE);
 
         return v;
@@ -324,14 +339,13 @@ public class AppListAdapter extends BaseAdapter {
         Collections.sort(list);
         boolean dirty = !list.equals(listItems);
 
-
-        Log.i("aaaaaaa", "dirty = " + dirty + ", mDirtyState = " + mDirtyState);
-
         notifyDirtyStateChanged(dirty);
     }
 
     void setLocked(boolean lock, String... packageNames) {
         //Log.d("", "setLocked");
+
+        // lưu vào share pref những app bị khóa ( kể cả nhưng app k bị khóa nữa, khi đó xét = false)
         for (String packageName : packageNames) {
             if (lock) {
                 mEditor.putBoolean(packageName, true);
@@ -343,7 +357,7 @@ public class AppListAdapter extends BaseAdapter {
 
     void save() {
         PreUtils.apply(mEditor);
-        //AppLockService.restart(mContext);
+        AppLockService.restart(context);
     }
 
 
@@ -358,6 +372,10 @@ public class AppListAdapter extends BaseAdapter {
         ArrayList<String> apps = new ArrayList<>();
         for (AppListElement app : listItems) {
             if (app.isApp()) {
+                // tránh các app được khóa bằng phân quyền
+                if(listAppLocked.contains(app.packageName))
+                    continue;
+
                 app.locked = lock;
                 apps.add(app.packageName);
             }

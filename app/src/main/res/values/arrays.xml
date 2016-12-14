@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="setting_lock_background">
-        <item>Đen</item>
-        <item>Trắng</item>
-        <item>Vàng</item>
-        <item>Hồng</item>
+        <item>Mặc định</item>
+        <item>Xanh dương</item>
+        <item>Xanh lá</item>
+        <item>Đỏ</item>
+        <item>Cam</item>
+        <item>Tùy chọn</item>
+
     </string-array>
 
     <string-array name="setting_lock_background_val">
@@ -12,6 +15,20 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="setting_wrong_times">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="setting_wrong_times_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
 
 </resources>

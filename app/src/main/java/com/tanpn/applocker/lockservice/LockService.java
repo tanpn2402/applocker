@@ -14,11 +14,16 @@ import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -36,10 +41,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tanpn.applocker.R;
+import com.tanpn.applocker.capture.Capture;
+import com.tanpn.applocker.sqlite.SQLAppPassword;
+import com.tanpn.applocker.sqlite.SQLAppUnLock;
 import com.tanpn.applocker.utils.PreUtils;
 import com.tanpn.applocker.utils.utils;
 
 import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Created by phamt_000 on 11/9/16.
@@ -47,8 +57,9 @@ import java.io.FileNotFoundException;
 public class LockService extends Service implements View.OnClickListener,
         View.OnKeyListener {
 
-    public static Intent getLockIntent(Context c, String packageName) {
 
+    public static Intent getLockIntent(Context c, String packageName) {
+        mContext = c;
         Intent i = new Intent(c, LockService.class);
         i.setAction(ACTION_COMPARE);
         i.putExtra(EXTRA_PACKAGENAME, packageName);
@@ -62,6 +73,7 @@ public class LockService extends Service implements View.OnClickListener,
     }
 
     public static void showCompare(Context c, String packageName) {
+        mContext = c;
         Log.d("AABB", "Dsdas");
         c.startService(getLockIntent(c, packageName));
     }
@@ -69,18 +81,36 @@ public class LockService extends Service implements View.OnClickListener,
     /**
      * create new lock
      * */
+
+    private int createLockType;
+
     public static void showCreate(Context c, int type) {
-        Log.i("HAHA", "showCreate (type=" + type + ")");
+        mContext = c;
         Intent i = new Intent(c, LockService.class);
         i.setAction(ACTION_CREATE);
         LockPreferences prefs = new LockPreferences(c);
         prefs.type = type;
+        prefs.createLockType = LockPreferences.CREATE_DEFAULT_LOCK;
         i.putExtra(EXTRA_PREFERENCES, prefs);
         c.startService(i);
     }
 
-    public static void showCreate(Context c, int type, int size) {
-        Log.d("HAHA", "showCreate (type=" + type + ",size=" + size + ")");
+    /**
+     * Hàm khởi tạo màn hình khóa: được dùng để tạo mật khâu lock (default lock khi mới vào app),  lock group, và đổi mật khẩu
+     *
+     * */
+    public static void showCreate(Context c, int type, int createType) {
+        Intent i = new Intent(c, LockService.class);
+        i.setAction(ACTION_CREATE);
+        LockPreferences prefs = new LockPreferences(c);
+        prefs.type = type;
+        prefs.createLockType = createType;
+        i.putExtra(EXTRA_PREFERENCES, prefs);
+        c.startService(i);
+    }
+
+
+    /*public static void showCreate(Context c, int type, int size) {
         Intent i = new Intent(c, LockService.class);
         i.setAction(ACTION_CREATE);
         LockPreferences prefs = new LockPreferences(c);
@@ -88,7 +118,7 @@ public class LockService extends Service implements View.OnClickListener,
         prefs.patternSize = size;
         i.putExtra(EXTRA_PREFERENCES, prefs);
         c.startService(i);
-    }
+    }*/
 
 
     /**
@@ -190,6 +220,8 @@ public class LockService extends Service implements View.OnClickListener,
                 newNumber = newNumber.substring(0, MAX_PASSWORD_LENGTH);
                 mLockPasswordView.setPassword(newNumber);
             }
+
+            // update cái text view hiển thị dấu *
             updatePasswordTextView(newNumber);
 
             if (ACTION_COMPARE.equals(mAction)) {
@@ -223,24 +255,69 @@ public class LockService extends Service implements View.OnClickListener,
     /**
      * Đối chiếu password
      * */
+    private int wrongTimes = 0;
     private void doComparePassword(boolean explicit) {
-        final String currentPassword = mLockPasswordView.getPassword();
+        final String currentPassword = mLockPasswordView.getPassword(); // là password đang được nhập vào (nhập được số nào thì compare luôn)
+
         if (currentPassword.equals(options.password)) {
+            // kiểm tra xem có == mật khẩu root hay không
+            wrongTimes = 0;
             exitSuccessCompare();
-        } else if (explicit) {
+        }
+        else if(options.groupPassword != null && options.groupPassword.equals(currentPassword)){
+            // kiểm tra với mật khẩu nhóm
+            wrongTimes = 0;
+            exitSuccessCompare();
+
+        }
+        else if (explicit || currentPassword.length() >= options.maxLenghtPassword) { // nếu nhu chọn nút ok ( ép compare), hoặc password được nhập vào quá kí tự của password
             mLockPasswordView.clearPassword();
             updatePassword();
+            wrongTimes ++;
+            Log.i("test", wrongTimes + "");
+
+            if(wrongTimes == options.wrongTimes){
+                enterWrongPassword();
+                wrongTimes = 0;
+            }
             Toast.makeText(this, "Sai mật khẩu",
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void enterWrongPassword(){
+        // khong duoc sai toi da xxx lan
+        Log.i("test", "them vao sql " + mPackageName);
+        //new SQLAppUnLock(this).insert(mPackageName);
+
+        mLockPasswordView.removeListener();
+
+        Intent intent = new Intent("LOCK_NOTIFY");
+        // You can also include some extra data.
+        intent.putExtra("message", "false" + "|" + mPackageName);   //
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
     }
 
     /**
      * Exit when an app has been unlocked successfully
      */
     private void exitSuccessCompare() {
+        mLockPasswordView.removeListener();
+
         if (mPackageName == null || mPackageName.equals(getPackageName())) {
-            finish(true);
+            /*
+            * mở khóa để vào app cửa mình
+            * thông báo đến headActivity là đã mở khóa thành công
+            * */
+
+            Intent intent = new Intent("LOCK_NOTIFY");
+            // You can also include some extra data.
+            intent.putExtra("message", "true" + "|" + mPackageName);   //
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+
+            //finish(true);
             return;
         }
         if (mServiceState == ServiceState.BOUND) {
@@ -320,7 +397,7 @@ public class LockService extends Service implements View.OnClickListener,
     private Intent mIntent;
     private String mAction;
 
-
+    private static Context mContext;
 
 
     private Animation mAnimHide;
@@ -359,6 +436,7 @@ public class LockService extends Service implements View.OnClickListener,
     private PasswordView.OnNumberListener mPasswordListener;
 
     private long mTimeViewShown;
+
 
     /**
      * Called after views are inflated
@@ -406,6 +484,10 @@ public class LockService extends Service implements View.OnClickListener,
         }
     }
 
+    /**
+     * Confirm: xác thực lại password them 1 lần nữa đối với những trường hợp tạo tài khoản nhóm, tạo pass default, và đổi mật khẩu
+     *
+     * */
     private void doConfirmPassword() {
         final String newValue = mLockPasswordView.getPassword();
         if (!newValue.equals(mNewPassword)) {
@@ -414,13 +496,55 @@ public class LockService extends Service implements View.OnClickListener,
             setupFirst();
             return;
         }
-        PreUtils prefs = new PreUtils(this);
-        prefs.put(R.string.pref_key_password, newValue);
-        prefs.putString(R.string.pref_key_lock_type,
+
+        /**
+         * luu password
+         * */
+       if(options.createLockType == LockPreferences.CREATE_DEFAULT_LOCK){
+            PreUtils prefs = new PreUtils(this);
+            prefs.put(R.string.pref_key_password, newValue);
+            prefs.putString(R.string.pref_key_lock_type,
                 R.string.pref_val_lock_type_password);
-        prefs.apply();
-        Toast.makeText(this, R.string.password_change_saved, Toast.LENGTH_SHORT)
-                .show();
+            prefs.apply();
+
+            Toast.makeText(this, R.string.password_change_saved, Toast.LENGTH_SHORT)
+                   .show();
+
+           /**
+            * thông báo về intro fragment để cho biết là đã cập nhật mật khẩu thành công
+            * */
+
+           Intent intent = new Intent("SET_DEFAULT_PASSWORD");
+           // You can also include some extra data.
+           intent.putExtra("message", "");   //
+           LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+       }
+        else if(options.createLockType == LockPreferences.CREATE_GROUP_LOCK){
+           /**
+            * local broadcast
+            * thông báo đến AddGroup là đã tạo tài khoản nhóm thành công
+            * */
+
+           Intent intent = new Intent("SET_PASSWORD");
+           // You can also include some extra data.
+           intent.putExtra("message", newValue);   //
+           LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+       }
+        else if(options.createLockType == LockPreferences.CHANGE_LOCK){
+           // đổi mật khẩu root
+           // chỉ cần lưu lại vào share preferences
+
+           PreUtils prefs = new PreUtils(this);
+           prefs.put(R.string.pref_key_password, newValue);
+           prefs.putString(R.string.pref_key_lock_type,
+                   R.string.pref_val_lock_type_password);
+           prefs.apply();
+
+           Toast.makeText(this, R.string.password_change_saved, Toast.LENGTH_SHORT)
+                   .show();
+       }
+
         exitCreate();
     }
 
@@ -450,7 +574,6 @@ public class LockService extends Service implements View.OnClickListener,
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("HAHA", "lock serive is created");
     }
 
     private final String TAG = "TAG_LOCK_SERVICE";
@@ -458,7 +581,6 @@ public class LockService extends Service implements View.OnClickListener,
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i("HAHA", "ron start command");
 
         if(intent == null){
             Log.i(TAG, "return START_NOT_STICKY");
@@ -518,12 +640,19 @@ public class LockService extends Service implements View.OnClickListener,
 
     private void finish(boolean unlocked) {
         if (!unlocked && ACTION_COMPARE.equals(mAction)) {
+
+            // trở về màn hình home
             final Intent i = new Intent(Intent.ACTION_MAIN);
             i.addCategory(Intent.CATEGORY_HOME);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
         }
+
+        // hide voew
         hideView();
+
+
+
     }
 
 
@@ -543,7 +672,7 @@ public class LockService extends Service implements View.OnClickListener,
             mWindowManager.removeView(mRootView);
         }
 
-        // Prepare everything
+        // chuẩn bị mọi thứ: LockPreferences : lấy các thông tin về khóa
         beforeInflate();
         // Create the view
         mRootView = inflateRootView();
@@ -696,15 +825,31 @@ public class LockService extends Service implements View.OnClickListener,
         }
 
         if (mIntent.hasExtra(EXTRA_PREFERENCES)) {
-            options = (LockPreferences) mIntent
-                    .getSerializableExtra(EXTRA_PREFERENCES);
+
+            options = (LockPreferences) mIntent.getSerializableExtra(EXTRA_PREFERENCES);
         } else {
+            // lấy các thông tin về khóa
             options = new LockPreferences(this);
         }
+        if(options.password == null)
+            options.maxLenghtPassword = 0;
+        else
+            options.maxLenghtPassword = options.password.length();
 
         mPackageName = mIntent.getStringExtra(EXTRA_PACKAGENAME);
 
         if (!getPackageName().equals(mPackageName)) {
+            // nếu app được mở không phải là applock
+
+            // lay password cua group do (nếu app đó đưuọc phân quyền)
+            options.groupPassword = new SQLAppPassword(this).getPassword(mPackageName); // lấy password của nhóm phân quyền
+
+            //độ dài của mật khẩu tối đa giữa pass root và pass group
+            if(options.groupPassword != null)
+                options.maxLenghtPassword = Math.max(options.password.length(), options.groupPassword.length());
+
+
+            //// tao intent thong den AppLockSerive là serive duoc bind
             Intent i = new Intent(this, AppLockService.class);
             if (mServiceState == ServiceState.NOT_BOUND) {
                 Log.v(TAG, "Binding service (mServiceState=" + mServiceState + ")");
@@ -715,11 +860,6 @@ public class LockService extends Service implements View.OnClickListener,
             }
         }
 
-        if (ACTION_CREATE.equals(mAction) || mPackageName == getPackageName()) {
-            options.showAds = false;
-        } else {
-            options.showAds = true;
-        }
 
         if (ACTION_CREATE.equals(mAction)) {
             options.patternStealth = false;
@@ -743,16 +883,6 @@ public class LockService extends Service implements View.OnClickListener,
 
     private void afterInflate() {
         setBackground();
-        if (options.showAds) {
-
-
-        } else {
-            // Don't use precious space
-            mRootView.findViewById(R.id.lock_ad_container).setVisibility(
-                    View.GONE);
-            Log.w(TAG, "Not requesting ads!!!n!!!");
-        }
-
 
         switch (options.type) {
             case LockPreferences.TYPE_PATTERN:
@@ -811,7 +941,7 @@ public class LockService extends Service implements View.OnClickListener,
             mLockPasswordView.setOkButtonVisibility(View.VISIBLE);
         }
 
-        mLockPasswordView.setTactileFeedbackEnabled(options.vibration);
+        mLockPasswordView.setTactileFeedbackEnabled(options.vibraWhenPress);
         mLockPasswordView.setSwitchButtons(options.passwordSwitchButtons);
         mLockPasswordView.setVisibility(View.VISIBLE);
         options.type = LockPreferences.TYPE_PASSWORD;
@@ -882,21 +1012,17 @@ public class LockService extends Service implements View.OnClickListener,
 
     //----------------set background
     private void setBackground() {
-        String def = getString(R.string.pref_val_bg_default);
-        String blue = getString(R.string.pref_val_bg_blue);
-        String dark_blue = getString(R.string.pref_val_bg_dark_blue);
-        String green = getString(R.string.pref_val_bg_green);
-        String purple = getString(R.string.pref_val_bg_purple);
-        String red = getString(R.string.pref_val_bg_red);
-        String orange = getString(R.string.pref_val_bg_orange);
-        String turquoise = getString(R.string.pref_val_bg_turquoise);
+
+        String def = "0";
+        String blue = "1";
+        String green = "2";
+        String purple = "3";
+        String red = "4";
+        String orange = "5";
         mViewBackground.setImageBitmap(null);
         if (blue.equals(options.background)) {
             mViewBackground.setBackgroundColor(getResources().getColor(
                     R.color.flat_blue));
-        } else if (dark_blue.equals(options.background)) {
-            mViewBackground.setBackgroundColor(getResources().getColor(
-                    R.color.flat_dark_blue));
         } else if (green.equals(options.background)) {
             mViewBackground.setBackgroundColor(getResources().getColor(
                     R.color.flat_green));
@@ -906,9 +1032,6 @@ public class LockService extends Service implements View.OnClickListener,
         } else if (red.equals(options.background)) {
             mViewBackground.setBackgroundColor(getResources().getColor(
                     R.color.flat_red));
-        } else if (turquoise.equals(options.background)) {
-            mViewBackground.setBackgroundColor(getResources().getColor(
-                    R.color.flat_turquoise));
         } else if (orange.equals(options.background)) {
             mViewBackground.setBackgroundColor(getResources().getColor(
                     R.color.flat_orange));

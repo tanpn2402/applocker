@@ -17,13 +17,19 @@ public class LockPreferences implements Serializable {
 
     public static final int TYPE_PASSWORD = 1; // 1
     public static final int TYPE_PATTERN = 1 << 1; // 2
+    public static final int CREATE_DEFAULT_LOCK = 1 << 2;
+    public static final int CREATE_GROUP_LOCK = 1 << 3;
+    public static final int CHANGE_LOCK = 1 << 4;
+
+
+    public int createLockType;
 
     // Common
     /** Whether this user has pro features enabled or no */
-    private boolean pro;
+    private boolean pro = true;
     public int type;
     public final String orientation;
-    public final Boolean vibration;
+    public final Boolean vibraWhenPress, vibraWhenWrong;
     public final String message;
     public int patternSize;
 
@@ -37,6 +43,9 @@ public class LockPreferences implements Serializable {
     // Password only
     public final String password;
     public final boolean passwordSwitchButtons;
+    public final int wrongTimes;
+    public String groupPassword;
+    public int maxLenghtPassword;
 
     // Pattern only
     public final String pattern;
@@ -46,25 +55,26 @@ public class LockPreferences implements Serializable {
     // Pro & pattern only
     public final int patternCircleResId;
 
-    public boolean showAds = true;
 
     /**
-     * You should use this constructor which loads all properties into the
-     * object automatically
-     *
-     * @param c
-     * @return
+     LockPreferences: Khởi tạo các giá trị của màn hình khóa:
+        - kiểu khóa: type
+        - hướng màn hình: orientation
+        - rung:
+        - thông báo khi nhập sai mật khẩu
+        - màu nền: background: có thể chọn hình nền từ gallery
+        -....
      */
     public LockPreferences(Context c) {
         PreUtils prefs = new PreUtils(c);
         // Common
         type = prefs.getCurrentLockTypeInt();
         orientation = prefs.getString(R.string.pref_key_orientation);
-        vibration = prefs.getBoolean(R.string.pref_key_vibrate,
-                R.bool.pref_def_vibrate);
+        vibraWhenPress = prefs.getBoolean(R.string.pref_key_setting_press_vibra, R.bool.pref_def_vibrate);
+        vibraWhenWrong = prefs.getBoolean(R.string.pref_key_setting_vibra, R.bool.pref_def_vibrate);
         message = prefs.getString(R.string.pref_key_lock_message);
 
-        if (pro) {
+        /*if (pro) {
             background = prefs.getString(R.string.pref_key_background,
                     R.string.pref_def_background);
             // Show animation
@@ -99,11 +109,27 @@ public class LockPreferences implements Serializable {
             hideAnimationResId = getAnimationResId(c, hideAnim, false);
             hideAnimationMillis = Integer.parseInt(c
                     .getString(R.string.pref_def_anim_hide_millis));
-        }
+        }*/
+
+        background = prefs.getString(R.string.pref_key_lock_background, "0");
+        // Show animation
+        final String showAnim = prefs.getString(R.string.pref_key_anim_show_type, R.string.pref_def_anim_show_type);
+        showAnimationResId = getAnimationResId(c, showAnim, true);
+        showAnimationMillis = prefs.parseInt(R.string.pref_key_anim_show_millis, R.string.pref_def_anim_show_millis);
+
+        // Hide animation
+        final String hideAnim = prefs.getString(R.string.pref_key_anim_hide_type, R.string.pref_def_anim_hide_type);
+        hideAnimationResId = getAnimationResId(c, hideAnim, false);
+        hideAnimationMillis = prefs.parseInt(
+                R.string.pref_key_anim_hide_millis,
+                R.string.pref_def_anim_hide_millis);
 
         // Load both password and pattern because user could override the type
         // setting
         password = prefs.getString(R.string.pref_key_password);
+        int x = prefs.getInt(R.string.pref_key_setting_wrong_time,0);
+        wrongTimes = x + 3;
+
         passwordSwitchButtons = prefs.getBoolean(
                 R.string.pref_key_switch_buttons,
                 R.bool.pref_def_switch_buttons);
@@ -121,11 +147,7 @@ public class LockPreferences implements Serializable {
                 prefs.getString(R.string.pref_key_pattern_color));
     }
 
-    /**
-     * @param show
-     *            true if show animation, false if hide animation
-     * @return the resid to be applied
-     */
+
     private static int getAnimationResId(Context c, String type, boolean show) {
         if (type != null) {
             if (type.equals(c.getString(R.string.pref_val_anim_slide_left)))

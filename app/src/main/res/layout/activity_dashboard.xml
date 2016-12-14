@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tanpn.applocker.user.Dashboard"
+    android:id="@+id/dashboard">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:gravity="bottom"
+        android:background="@color/colorPrimary"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/appBar">
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tabLayout"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            ></android.support.design.widget.TabLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/viewPaper"
+
+        android:layout_below="@+id/appBar"
+        android:layout_alignParentBottom="true"></android.support.v4.view.ViewPager>
+</RelativeLayout>

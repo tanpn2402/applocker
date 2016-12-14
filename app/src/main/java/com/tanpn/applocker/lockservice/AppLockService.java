@@ -16,6 +16,8 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import com.tanpn.applocker.R;
+import com.tanpn.applocker.sqlite.SQLAppPassword;
+import com.tanpn.applocker.sqlite.SQLAppUsages;
 import com.tanpn.applocker.utils.PreUtils;
 
 import java.util.HashMap;
@@ -51,6 +53,11 @@ public class AppLockService extends Service {
     private final String TAG_APP = "AppLockService";
 
     private boolean relockScreenOff;    // duoc lay tu Preferences
+
+
+
+    ///
+    private SQLAppUsages sqLiteHelper;
 
 
     public AppLockService() {
@@ -105,6 +112,11 @@ public class AppLockService extends Service {
             return false;
         }*/
 
+        sqLiteHelper = new SQLAppUsages(this);
+        //sqLiteHelper.getValue("com.tanpn.applocker");
+
+
+
         mActivityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         mHandler = new Handler();
         lockedPackages = new HashMap<>();
@@ -116,9 +128,14 @@ public class AppLockService extends Service {
         registerReceiver(screenReceiver, filter);
 
         // lay cac app bi khoa
-        final Set<String> apps = PreUtils.getLockedApps(this);
-        for (String s : apps) {
-            lockedPackages.put(s, true);
+        final Set<String> appLockedByRoot = PreUtils.getLockedApps(this);       // app được khóa bằng root
+        final List<String> appLockByPermission = new SQLAppPassword(this).getAllAppsLocked();   // app được khóa bằng phân quyền
+
+        appLockByPermission.addAll(appLockedByRoot);
+
+        for (String s : appLockByPermission) {
+            if(!lockedPackages.containsKey(s))
+                lockedPackages.put(s, true);
         }
 
 
@@ -164,9 +181,11 @@ public class AppLockService extends Service {
         // lay package duoc mo
         final String packageName = getPackageStarted();
 
+
+
         if(!packageName.equals(lastPackageName)){
             // app duoc mo khac voi app duoc mo truoc do
-
+            sqLiteHelper.updateValue(packageName);
             Log.i(TAG, "app changed from " + lastPackageName + " to " + packageName);
 
             onAppClose(lastPackageName, packageName);
@@ -183,6 +202,8 @@ public class AppLockService extends Service {
         if(lockedPackages.containsKey(openPackage)){
             // co nam trong lockedPackages
             onLockAppOpen(openPackage);
+
+            Log.i("TANA", " contain key");
         }
     }
 
@@ -193,8 +214,10 @@ public class AppLockService extends Service {
         //      chu khong kiem tra co khoa hay khong
         final boolean locked = lockedPackages.get(openPackage);
 
+        Log.i("TANA", " on lock app open");
+
         if(locked){
-            Log.i(TAG, openPackage + " locked");
+            Log.i("TANA", openPackage + " locked");
 
             showLockScreen(openPackage);
         }
@@ -322,6 +345,7 @@ public class AppLockService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
         //Log.i(TAG, "on Start command");
         if(intent == null || ACTION_START.equals(intent.getAction())){
             // service duoc start
@@ -473,6 +497,14 @@ public class AppLockService extends Service {
     }
 
 
+    /**
+     * khởi tạo lại service, trường hợp chọn app để khóa
+     */
+    public static void restart(Context c) {
+        Intent i = new Intent(c, AppLockService.class);
+        i.setAction(ACTION_RESTART);
+        c.startService(i);
+    }
 
 
     private void doStopService(){

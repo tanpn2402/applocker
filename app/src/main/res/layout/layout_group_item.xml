@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Child"
+        android:id="@+id/tvGroupName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="5"
+        android:id="@+id/tvNembers"
+        android:layout_below="@+id/tvGroupName"
+        android:layout_alignLeft="@+id/tvGroupName"
+        android:layout_alignStart="@+id/tvGroupName"
+        android:layout_marginTop="6dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView2"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/abc_ic_go_search_api_material" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="apps"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/tvGroupName"
+        android:layout_toRightOf="@+id/tvNembers"
+        android:layout_toEndOf="@+id/tvNembers"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="5dp" />
+
+</RelativeLayout>
