@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <SwitchPreference android:key="@string/pref_key_lock_enable"
+            android:title="@string/setting_lock_enable"
+            android:defaultValue="true"/>
+
+
+
+    <PreferenceCategory
+        android:title="@string/setting_title_general"
+        android:key="@string/pref_key_setting_title_general">
+
+        <ListPreference android:key="@string/pref_key_lock_background"
+            android:title="@string/setting_lock_background"
+            android:summary="@string/setting_lock_background_summary"
+            android:entries="@array/setting_lock_background"
+            android:entryValues="@array/setting_lock_background_val"
+            android:defaultValue="0"/>
+
+        <CheckBoxPreference android:key="@string/pref_key_setting_press_vibra"
+            android:title="@string/setting_vibration_press_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference android:key="@string/pref_key_setting_vibra"
+            android:title="@string/setting_vibration_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference android:key="@string/pref_key_setting_start_at_boot"
+            android:title="@string/setting_general_start_at_boot"
+            android:defaultValue="true"/>
+
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/setting_title_password"
+        android:key = "@string/pref_key_setting_title_password">
+
+        <ListPreference android:key="@string/pref_key_setting_wrong_time"
+            android:title="@string/setting_general_wrong_time_title"
+            android:summary="@string/setting_general_wrong_time_title"
+            android:entries="@array/setting_wrong_times"
+            android:entryValues="@array/setting_wrong_times_values"
+            android:defaultValue="0"/>
+
+        <Preference android:key="@string/pref_key_setting_change_pwrd_pass"
+            android:title="@string/setting_change_password" />
+
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

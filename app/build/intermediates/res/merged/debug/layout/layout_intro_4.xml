@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/intro_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c870f4">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Để bắt đầu, hãy tạo một tài khoản cá nhân cho bạn"
+            android:gravity="center"
+            android:textColor="#dddddd"
+            android:layout_gravity="bottom|center"
+            android:maxEms="18"
+            android:textSize="25dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_above="@+id/relativeLayout3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="32dp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:id="@+id/relativeLayout3">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtUsername"
+                android:hint="tên đăng nhập"
+                android:background="@drawable/edittext_background"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorHint="#a2939393"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtPassword"
+                android:hint="mật khẩu"
+                android:background="@drawable/edittext_background"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorHint="#a2939393"
+                android:layout_below="@+id/edtUsername"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edtComfirm"
+                android:hint="nhập lại"
+                android:background="@drawable/edittext_background"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textColorHint="#a2939393"
+                android:layout_below="@+id/edtPassword"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tiếp"
+                android:id="@+id/btnNext"
+                android:background="@drawable/button_signup"
+                android:layout_below="@+id/edtComfirm"
+                android:layout_marginTop="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

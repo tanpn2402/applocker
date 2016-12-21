@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86,armeabi-v7a,armeabi"
+    api-level="21"
+    density="xhdpi"
+    format="7"
+    timestamp="91923536021922"
+    token="-8496257804847647339" >
+
+    <task
+        name="javac"
+        duration="418" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="193" />
+    <task
+        name="verifier"
+        duration="46" />
+
+    <artifact
+        location="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_5\classes.dex"
+        type="DEX" />
+
+    <build timestamp="90511346963866" >
+        <artifact
+            location="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\outputs\apk\app-debug.apk"
+            type="MAIN" />
+    </build>
+    <build timestamp="91200896606343" >
+        <artifact
+            location="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_3\classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="91923536021922" >
+        <artifact
+            location="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_5\classes.dex"
+            type="DEX" />
+    </build>
+
+</instant-run>

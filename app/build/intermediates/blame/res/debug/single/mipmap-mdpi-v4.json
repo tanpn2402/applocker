@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_action_search.png",
+        "source": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\src\\main\\res\\mipmap-mdpi\\ic_action_search.png"
+    },
+    {
+        "merged": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_action_refresh.png",
+        "source": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\src\\main\\res\\mipmap-mdpi\\ic_action_refresh.png"
+    },
+    {
+        "merged": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_action_secure.png",
+        "source": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\src\\main\\res\\mipmap-mdpi\\ic_action_secure.png"
+    },
+    {
+        "merged": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi-v4\\ic_action_not_secure.png",
+        "source": "C:\\Users\\phamt_000\\Desktop\\MN_APP\\AppLocker\\app\\src\\main\\res\\mipmap-mdpi\\ic_action_not_secure.png"
+    }
+]
