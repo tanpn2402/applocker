@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\design\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-design-24.2.1_5b7809a876957ed067adb3f55a6d69c9dff47dbc.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-24.2.1_8bc17187118caa947133545ba214c2a1c6a783f7.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-basement-9.8.0_7570a0898db306ca2ac7c5bb15aaf41ebbbf7039.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-24.2.1_ee99cb55e13d1efb5d320309d2391127691a8d1c.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-module\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="3f8f779a22cbb4c4d0759467a4f1011bb5252970">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-module-9.8.0_ae8b9edbfd6abc59dbf7b1bdc68c30198dbda524.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_c36de657428e0c93de5ca5da0220a8a91c4e7dc9.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_b32d3aa643711be0cc06e403f4c519df3c956289.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="7e92aadd0697922316d1395c1887a23aebec640a">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-base-9.8.0_149abd7f580cdae2fd450e387b07d5cdfef57b14.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_3eb7cff5414e853e857adf56ecbc2b37a3070ea3.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.2.1_5651d65d527ba8fc707aa50f6206e5887ebb64cf.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="c61641e333fa88da21758bab8cc28ee16604b05f">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-common-9.8.0_144aeb54ad56de41d3fbea6bf2d31ca19ba76be5.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="15e59454416c6341bd3ed2533b585cd340682dd1">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-9.8.0_53645f6ce029e00dea8fecd2c707d60cdd7c6587.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="6b6f292b8b951dcf2ecf2b20853e3eabc7d65c48">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-iid-9.8.0_be4568b300ec08376140cb355ae43c2a77f2c852.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.2.1_e38cc77efa2a6b0ef2662960a4a2af9853b8a7ef.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="03df48d3713661d66ad024b1e406259a4c26fcac">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-database-9.8.0_d169519b1e4d0130ae80df53c63573da96a44e84.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="9ff04cc3470178a44512624036751a803418c2ca">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-9.8.0_3dd8935644b5a2972531fe5ea8ef18bbbea8929a.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-24.2.1_d3a36fa1af52d33c8d36a6078ba8264202705550.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_fdb0d1325f969e95be3fd9b1507c6a0301d6fdc2.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-storage-common\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="ec9104b53aee77dfcfd2fe1c4add23ff7c4df55f">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-storage-common-9.8.0_d4addf375bfebf8843bd8cce84f50d6df5c4d9e3.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="bf2e1838e4428616c1aa26edf43de72b5b99bf84">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-tasks-9.8.0_c3b1ab59b587796ce7ca3c745f853a069e2b310f.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-24.2.1_91976722072e28669c9e75835150c79821af6584.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-storage\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="7fd91ec2730fdaa82906aad32a3f3d3e574bae56">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-storage-9.8.0_0b9392fa2578c9f654ebc10324a4040e584c1c82.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="190a642ba16d1421296a4d794606279b80039c59">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-impl-9.8.0_ca275718264dff1f2a98eaa09a596201084c0012.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database-connection\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="5f47ede9561595584dca71104baa0fecb36dda87">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-database-connection-9.8.0_ca83b9ac724117ceed0f0b43891096ee5c8b1873.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_6a669101109809fb3706026db68723ef79a4ec0b.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.2.1_5c46cf2421d0b10a2febe11ae10abbfabe4b8529.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-common\9.8.0\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="4438b1a7848a7c571122ba618aa1304514aabee6">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-common-9.8.0_7654b5199115a32f4c24bfc0b6eed83875dcd086.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.2.1_12a7fae8345fb156c75860cc25d90ae67b229858.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_df851367d677207fee8ecb77d9b6f4ec5de0f75c.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-24.2.1_53c80b65d6cec49879f3ba7ca46f4d6485a2c934.jar" />
+    </item>
+    <item
+        jar="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-24.2.1_c603555b060af1f35824f14b1bedfa8e09aad688.jar" />
+    </item>
+
+</items>

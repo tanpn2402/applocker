@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_all_apps"
+            android:title="@string/nav_allapps" />
+        <item
+            android:id="@+id/nav_user"
+            android:title="@string/nav_user"
+            />
+        <item
+            android:id="@+id/nav_settings"
+            android:title="@string/nav_setting"
+            />
+
+    </group>
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_contact"
+            android:title="@string/nav_contact" />
+        <item
+            android:id="@+id/nav_share"
+            android:title="@string/nav_share" />
+        <item
+            android:id="@+id/nav_rate"
+            android:title="@string/nav_rate" />
+    </group>
+
+
+
+</menu>

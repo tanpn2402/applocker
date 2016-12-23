@@ -1,0 +1,5 @@
+CHANGED,C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
+CHANGED,C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\tanpn\applocker\capture\Capture$SaveImageTask$override.class
+CHANGED,C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\tanpn\applocker\capture\Capture$closeApp$override.class
+CHANGED,C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\tanpn\applocker\capture\Capture$override.class
+CHANGED,C:\Users\phamt_000\Desktop\MN_APP\AppLocker\app\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\tanpn\applocker\capture\Capture$1$override.class
